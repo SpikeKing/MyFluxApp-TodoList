@@ -24,34 +24,21 @@ public class ActionsCreator {
     }
 
     public void create(String text) {
-        mDispatcher.dispatch(
-                TodoActions.TODO_CREATE,
-                TodoActions.KEY_TEXT, text
-        );
+        mDispatcher.dispatch(TodoActions.TODO_CREATE, TodoActions.KEY_TEXT, text);
     }
 
     public void destroy(long id) {
-        mDispatcher.dispatch(
-                TodoActions.TODO_DESTROY,
-                TodoActions.KEY_ID, id
-        );
+        mDispatcher.dispatch(TodoActions.TODO_DESTROY, TodoActions.KEY_ID, id);
     }
 
     public void undoDestroy() {
-        mDispatcher.dispatch(
-                TodoActions.TODO_UNDO_DESTROY
-        );
+        mDispatcher.dispatch(TodoActions.TODO_UNDO_DESTROY);
     }
 
     public void toggleComplete(Todo todo) {
         long id = todo.getId();
-        String actionType = todo.isComplete() ?
-                TodoActions.TODO_UNDO_COMPLETE : TodoActions.TODO_COMPLETE;
-
-        mDispatcher.dispatch(
-                actionType,
-                TodoActions.KEY_ID, id
-        );
+        String actionType = todo.isComplete() ? TodoActions.TODO_UNDO_COMPLETE : TodoActions.TODO_COMPLETE;
+        mDispatcher.dispatch(actionType, TodoActions.KEY_ID, id);
     }
 
     public void toggleCompleteAll() {

@@ -13,7 +13,7 @@ import www.wangchenlong.me.myfluxapp.actions.TodoActions;
 import www.wangchenlong.me.myfluxapp.model.Todo;
 
 /**
- * 状态类, 主要处理所有Todo列表事件的状态
+ * 状态类, 主要处理所有Todo列表事件的状态, 提供各种操作.
  * <p/>
  * Created by wangchenlong on 15/8/17.
  */

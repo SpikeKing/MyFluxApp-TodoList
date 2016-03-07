@@ -38,34 +38,24 @@ public class MainActivity extends AppCompatActivity {
     private static TodoStore sTodoStore; // 数据存储器, 存储Todo数据的状态
     private RecyclerAdapter mListAdapter;
 
-    @Bind((R.id.main_layout))
-    ViewGroup mMainLayout; // 主控件
-
-    @Bind(R.id.main_input)
-    EditText mMainInput; // 编辑控件
-
-    @Bind(R.id.main_list)
-    RecyclerView mMainList; // ListView
-
-    @Bind(R.id.main_checkbox)
-    CheckBox mMainCheck; // 选中按钮
+    @Bind((R.id.main_layout)) ViewGroup mMainLayout; // 主控件
+    @Bind(R.id.main_input) EditText mMainInput; // 编辑控件
+    @Bind(R.id.main_list) RecyclerView mMainList; // ListView
+    @Bind(R.id.main_checkbox) CheckBox mMainCheck; // 选中按钮
 
     // 添加按钮
-    @OnClick(R.id.main_add)
-    void addItem() {
+    @OnClick(R.id.main_add) void addItem() {
         addTodo(); // 添加TodoItem
         resetMainInput(); // 重置输入框
     }
 
     // 选中按钮
-    @OnClick(R.id.main_checkbox)
-    void checkItem() {
+    @OnClick(R.id.main_checkbox) void checkItem() {
         checkAll(); // 所有Item项改变选中状态
     }
 
     // 清理完成事项
-    @OnClick(R.id.main_clear_completed)
-    void clearCompletedItems() {
+    @OnClick(R.id.main_clear_completed) void clearCompletedItems() {
         clearCompleted(); // 清除选中的状态
         resetMainCheck();
     }
@@ -84,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mMainList.setAdapter(mListAdapter);
     }
 
-    /**
-     * Dispatcher调度器, Action事件, Store控制选择
-     */
+    // 初始化: Dispatcher调度器, Action事件, Store状态
     private void initDependencies() {
         sDispatcher = Dispatcher.getInstance(new Bus());
         sActionsCreator = ActionsCreator.getInstance(sDispatcher);
@@ -97,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // 把Subscribe的接口注册到EventBus上面
+        // 把订阅接口注册到EventBus
         sDispatcher.register(this);
         sDispatcher.register(sTodoStore);
     }
@@ -105,52 +93,42 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+        // 解除订阅接口
         sDispatcher.unregister(this);
         sDispatcher.unregister(sTodoStore);
     }
 
-    /**
-     * 添加ToDo项, 向ActionsCreator传递输入文本.
-     */
+    // 添加ToDo项, 向ActionsCreator传递输入文本.
     private void addTodo() {
         if (validateInput()) {
             sActionsCreator.create(getInputText());
         }
     }
 
-    /**
-     * 重置输入框
-     */
+    // 重置输入框
     private void resetMainInput() {
         mMainInput.setText("");
     }
 
-    /**
-     * 改变改变所有状态(ActionsCreator)
-     */
+    // 改变改变所有状态(ActionsCreator)
     private void checkAll() {
         sActionsCreator.toggleCompleteAll();
     }
 
-    /**
-     * 清理选中的项(ActionsCreator)
-     */
+    // 清理选中的项(ActionsCreator)
     private void clearCompleted() {
         sActionsCreator.destroyCompleted();
     }
 
-    /**
-     * 全选中按钮的置换状态
-     */
+    // 全选中按钮的置换状态
     private void resetMainCheck() {
         if (mMainCheck.isChecked()) {
             mMainCheck.setChecked(false);
         }
     }
 
-    /**
-     * 更新UI
-     */
+    // 更新UI, 核心方法
     private void updateUI() {
 
         // 设置适配器数据, 每次更新TodoStore的状态

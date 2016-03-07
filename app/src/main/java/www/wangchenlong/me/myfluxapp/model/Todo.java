@@ -1,6 +1,7 @@
 package www.wangchenlong.me.myfluxapp.model;
 
 /**
+ * 数据
  * Created by wangchenlong on 15/8/17.
  */
 public class Todo implements Cloneable, Comparable<Todo> {
@@ -37,7 +38,7 @@ public class Todo implements Cloneable, Comparable<Todo> {
     }
 
     @Override
-    public Todo clone()  {
+    public Todo clone() {
         return new Todo(id, text, complete);
     }
 
