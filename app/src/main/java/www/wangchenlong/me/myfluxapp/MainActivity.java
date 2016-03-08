@@ -33,10 +33,10 @@ import www.wangchenlong.me.myfluxapp.stores.TodoStore;
 @SuppressWarnings("unused")
 public class MainActivity extends AppCompatActivity {
 
-    private static Dispatcher sDispatcher;
-    private static ActionsCreator sActionsCreator;
+    private static Dispatcher sDispatcher; // 调度器
+    private static ActionsCreator sActionsCreator; // 活动创建器
     private static TodoStore sTodoStore; // 数据存储器, 存储Todo数据的状态
-    private RecyclerAdapter mListAdapter;
+    private RecyclerAdapter mListAdapter; // 展示数据的列表
 
     @Bind((R.id.main_layout)) ViewGroup mMainLayout; // 主控件
     @Bind(R.id.main_input) EditText mMainInput; // 编辑控件
@@ -128,6 +128,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // 验证输入框是否是空
+    private boolean validateInput() {
+        return !TextUtils.isEmpty(getInputText());
+    }
+
+    // 获取输入数据
+    private String getInputText() {
+        return mMainInput.getText().toString();
+    }
+
+    // 接收事件的改变
+    @Subscribe
+    public void onTodoStoreChange(TodoStore.TodoStoreChangeEvent event) {
+        updateUI();
+    }
+
     // 更新UI, 核心方法
     private void updateUI() {
 
@@ -148,21 +164,6 @@ public class MainActivity extends AppCompatActivity {
             });
             snackbar.show();
         }
-    }
-
-    // 验证输入框是否是空
-    private boolean validateInput() {
-        return !TextUtils.isEmpty(getInputText());
-    }
-
-    // 获取输入数据
-    private String getInputText() {
-        return mMainInput.getText().toString();
-    }
-
-    @Subscribe
-    public void onTodoStoreChange(TodoStore.TodoStoreChangeEvent event) {
-        updateUI();
     }
 
     @Override
