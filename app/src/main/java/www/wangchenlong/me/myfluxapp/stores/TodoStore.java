@@ -90,6 +90,7 @@ public class TodoStore extends Store {
         }
     }
 
+    // 删除全部完成事项
     private void destroyCompleted() {
         Iterator<Todo> iter = mTodos.iterator();
         while (iter.hasNext()) {
@@ -100,6 +101,7 @@ public class TodoStore extends Store {
         }
     }
 
+    // 反转全部事项的状态
     private void updateCompleteAll() {
         if (areAllComplete()) {
             updateAllComplete(false);
@@ -108,6 +110,7 @@ public class TodoStore extends Store {
         }
     }
 
+    // 判断是否全部选中完成
     private boolean areAllComplete() {
         for (Todo todo : mTodos) {
             if (!todo.isComplete()) {
@@ -117,12 +120,14 @@ public class TodoStore extends Store {
         return true;
     }
 
+    // 更新全部状态
     private void updateAllComplete(boolean complete) {
         for (Todo todo : mTodos) {
             todo.setComplete(complete);
         }
     }
 
+    // 更新ID的完成状态
     private void updateComplete(long id, boolean complete) {
         Todo todo = getById(id);
         if (todo != null) {
@@ -130,6 +135,7 @@ public class TodoStore extends Store {
         }
     }
 
+    // 撤销删除的事项
     private void undoDestroy() {
         if (lastDeleted != null) {
             addElement(lastDeleted.clone());
@@ -137,6 +143,7 @@ public class TodoStore extends Store {
         }
     }
 
+    // 根据Text创建事项，并且排序
     private void create(String text) {
         long id = System.currentTimeMillis();
         Todo todo = new Todo(id, text);
@@ -144,6 +151,7 @@ public class TodoStore extends Store {
         Collections.sort(mTodos);
     }
 
+    // 根据ID删除事项，并且放入最后删除项
     private void destroy(long id) {
         Iterator<Todo> iter = mTodos.iterator();
         while (iter.hasNext()) {
@@ -156,6 +164,7 @@ public class TodoStore extends Store {
         }
     }
 
+    // 获取根据ID获取事项
     private Todo getById(long id) {
         Iterator<Todo> iter = mTodos.iterator();
         while (iter.hasNext()) {
