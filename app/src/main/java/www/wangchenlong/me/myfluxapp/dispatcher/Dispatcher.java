@@ -12,8 +12,8 @@ import www.wangchenlong.me.myfluxapp.stores.Store;
  */
 public class Dispatcher {
 
-    private final Bus mBus;
-    private static Dispatcher sInstance;
+    private final Bus mBus;  // 事件总线
+    private static Dispatcher sInstance;  // 单例
 
     private Dispatcher(Bus bus) {
         mBus = bus;
@@ -38,7 +38,7 @@ public class Dispatcher {
         mBus.post(event);
     }
 
-    // 每个状态改变都需要发送事件, 由View相应, 做出更改
+    // 每个状态改变都需要发送事件, 由视图相应地做出更改
     public void emitChange(Store.StoreChangeEvent o) {
         post(o);
     }
@@ -57,7 +57,7 @@ public class Dispatcher {
             throw new IllegalArgumentException("Data must be a valid list of key,value pairs");
         }
 
-        Action.Builder actionBuilder = Action.type(type);
+        Action.Builder actionBuilder = new Action.Builder().with(type);
 
         int i = 0;
         while (i < data.length) {

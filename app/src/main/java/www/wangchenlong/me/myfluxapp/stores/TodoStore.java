@@ -32,7 +32,6 @@ public class TodoStore extends Store {
         if (sInstance == null) {
             sInstance = new TodoStore(dispatcher);
         }
-
         return sInstance;
     }
 
@@ -46,10 +45,9 @@ public class TodoStore extends Store {
         return lastDeleted != null;
     }
 
-    @Override
-    @Subscribe
+    @Override @Subscribe
     public void onAction(Action action) {
-        long id;
+        long id;  // 待处理ID
         switch (action.getType()) {
             case TodoActions.TODO_CREATE:
                 String text = ((String) action.getData().get(TodoActions.KEY_TEXT));
@@ -89,9 +87,7 @@ public class TodoStore extends Store {
                 updateCompleteAll();
                 emitStoreChange();
                 break;
-
         }
-
     }
 
     private void destroyCompleted() {

@@ -25,12 +25,7 @@ public class Action {
         return mData;
     }
 
-    // 通过类型创建Builder
-    public static Builder type(String type) {
-        return new Builder().with(type);
-    }
-
-    // 镜头Builder
+    // Builder的构造器模式
     public static class Builder {
         private String mType; // 类型
         private HashMap<String, Object> mData; // 数据
